@@ -5,5 +5,6 @@ from django.http import HttpResponse
 def index(request):
     return render(request, 'main/index.html')
 
-def about(request):
-    return HttpResponse("<h1>AOBUT!</h1>")
+def casino(request):
+    return render(request, 'main/casino.html')
+

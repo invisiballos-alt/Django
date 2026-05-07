@@ -1,11 +1,63 @@
 {% extends "main/base.html" %}
+{% block extra_css %}
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh; /* Занимает почти всю высоту экрана */
+        text-align: center;
+    }
+    
+    #playBtn {
+        margin-top: 20px;
+        padding: 10px 30px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    #result {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock  %}
 
 {% block title %}Главная{% endblock  %}
 
 {% block content %}
   <main>
 
+    <div id="result">Нажмите "Играть"</div>
+    <div id="balance">Баланс: 100</div>
+    <button id="playBtn">Играть</button>
     
+    <script>
+      const GAME_COST = 10;
+      const WIN_CHANCE = 0.1;
+      const WIN_REWARD = 100;
+
+      let balance = 100;
+
+      document.getElementById("playBtn").onclick = function (){
+        if (balance < GAME_COST){
+          document.getElementById("result").textContent =
+            "Недостаточно средств!";
+          return;
+        }
+        balance -= GAME_COST;
+        const win = Math.random() < WIN_CHANCE;
+        const result = {
+          outcome: win ? "You WIN!" : "LOSE",
+          reward: win? WIN_REWARD : 0,
+        }
+        balance += result.reward;
+        document.getElementById("result").textContent = result.outcome;
+        document.getElementById("balance").textContent = "Баланс: " + balance;
+      }
+    </script>
 
   </main>
 
